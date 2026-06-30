@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Open When Letters</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: "Noto Serif JP", serif;
+      background: #f6f1e7;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .scene {
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    .mailbox {
+      width: 120px;
+      height: 160px;
+      background: #6b4b3a;
+      margin: 30px auto;
+      border-radius: 10px;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .mailbox::before {
+      content: "";
+      position: absolute;
+      top: 50px;
+      left: 10px;
+      width: 100px;
+      height: 6px;
+      background: #2b1d16;
+      border-radius: 3px;
+    }
+
+    .hint {
+      font-size: 12px;
+      color: #666;
+    }
+
+    .letters {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .letter {
+      background: white;
+      padding: 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      border: 1px solid #ddd;
+    }
+
+    .recipient {
+      display: inline-block;
+      margin: 10px;
+      padding: 10px 20px;
+      background: #6b4b3a;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .paper {
+      background: white;
+      padding: 20px;
+      margin-top: 20px;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="scene" id="scene">
+
+  <h1>Open When Letters</h1>
+  <p>For Hiroto & Yuri</p>
+
+  <div class="mailbox" id="mailbox"></div>
+
+  <p class="hint">タップしてね</p>
+
+</div>
+
+<script>
+const scene = document.getElementById("scene");
+const mailbox = document.getElementById("mailbox");
+
+/* ① 郵便受けクリック */
+mailbox.addEventListener("click", () => {
+  showLetters();
+});
+
+/* ② テーマ一覧 */
+function showLetters() {
+  scene.innerHTML = `
+    <h1>Open When Letters</h1>
+    <p>テーマを選んでね</p>
+
+    <div class="letters">
+      <div class="letter" onclick="selectTheme('喧嘩したとき')">喧嘩したとき</div>
+      <div class="letter" onclick="selectTheme('旅行')">旅行</div>
+      <div class="letter" onclick="selectTheme('落ち込んだとき')">落ち込んだとき</div>
+    </div>
+  `;
+}
+
+/* ③ 宛先 */
+function selectTheme(theme) {
+  scene.innerHTML = `
+    <h1>${theme}</h1>
+    <p>誰に向ける？</p>
+
+    <div>
+      <div class="recipient" onclick="openLetter('${theme}','ひろと')">ひろと</div>
+      <div class="recipient" onclick="openLetter('${theme}','ゆり')">ゆり</div>
+    </div>
+  `;
+}
+
+/* ④ 手紙 */
+function openLetter(theme, name) {
+  scene.innerHTML = `
+    <h1>${theme}</h1>
+    <p>To ${name}</p>
+
+    <div class="paper">
+      <p>
+        これは${name}への手紙です。<br>
+        大丈夫、ちゃんと進んでるよ。
+      </p>
+    </div>
+  `;
+}
+</script>
+
+</body>
+</html>
